@@ -1,0 +1,46 @@
+type Query {
+
+    searchAddresses(
+        keyword: String,
+        page: Int = 1,
+        perPage: Int = 10
+    ): AddressSearchResult! @field(resolver: "App\\GraphQL\\Queries\\SearchAddresses@resolveKeyword")
+
+    searchNearBy(
+        lat: Float!,
+        lon: Float!,
+        distance: String = "10km",
+        page: Int = 1,
+        perPage: Int = 10
+    ): AddressSearchResult! @field(resolver: "App\\GraphQL\\Queries\\SearchAddresses@resolveNearby")
+
+    getMe: User @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveGetMe")
+
+    chatRooms: [ChatRoom!]! @all
+    
+    messages(
+        chat_room_id: Int!
+    ): [Message!]! @field(resolver: "App\\GraphQL\\Resolvers\\MessageResolver@resolveMessages")
+
+    recommendedAccommodationsNearby(
+        type_hotel: Int,
+        lat: Float!,
+        lon: Float!,
+        maxDistance: String = "10km",
+        minRating: Float = 4.0,
+        priceRange: PriceRange,
+        page: Int,
+        perPage: Int
+    ): AddressSearchResult @field(resolver: "App\\GraphQL\\Queries\\SearchAddresses@resolveRecommendedAccommodationsNearby")
+
+    customerOrderHistorys: OrderPayload @field(resolver: "App\\GraphQL\\Queries\\Customer@resolveOrderHistory")
+
+    customerWishLists : CustomerWishList @field(resolver: "App\\GraphQL\\Queries\\Customer@resolveWishList")
+
+    orderDetail(
+        id: Int!
+    ): SaleOrder @field(resolver: "App\\GraphQL\\Queries\\Customer@resolveOrderDetail")
+
+    informationCustomer: InformationCustomer @field(resolver: "App\\GraphQL\\Queries\\Customer@resolveInformation")
+
+}

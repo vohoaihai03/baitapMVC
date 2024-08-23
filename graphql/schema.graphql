@@ -1,0 +1,134 @@
+#import mutation.graphql
+#import query.graphql
+
+
+input PriceRange {
+    min: Float
+    max: Float
+}
+
+type AccommodationPage {
+    paginatorInfo: Pagination!
+    data: [Hotel!]!
+}
+
+
+type AuthCode {
+    code: Int
+    msg: String
+
+}
+
+type AuthPayload {
+    access_token: String
+    token_type: String
+    expires_in: Int
+    user: User
+    errors: [String]
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+}
+
+type AddressSearchResult {
+    data: [Address!]!
+    pagination: Pagination!
+}
+
+type Address {
+    id: ID!
+    name_hotel: String
+    city: String
+    district: String
+    ward: String
+    tel_hotel: String
+    address: String
+    full_address: String
+    zipcode: String
+    ratings_and_comments: String
+    average_price: String
+    image_url: String
+    intro_text: String
+}
+
+type Pagination {
+    currentPage: Int!
+    perPage: Int!
+    total: Int!
+}
+
+type ChatRoom {
+    id: ID!
+    name: String!
+    messages: [Message!]!
+}
+
+type Message {
+    id: ID!
+    chat_room_id: Int!
+    user_id: Int!
+    message: String
+    image: String
+    user: User!
+}
+
+
+type CustomerWishList {
+    id: ID
+    username: String
+    email: String
+    wish_list : [WishList!]!
+}
+
+type OrderPayload {
+    id: ID
+    username: String
+    email: String
+    orderHistory: [SaleOrder]
+}
+
+type SaleOrder{
+    id : ID
+    increment_id : String
+    hotel_id : Int
+    address: Address @with(relation: "address")
+    full_name : String
+    type_room : String
+    status : Int
+    check_in : String
+    check_out : String
+    number_of_adults : Int
+    number_of_guests : Int
+    phone_number : String
+    time_in : String
+    price_one_night : String
+    tax : String
+    price_include_tax : String
+    total_price : String
+    total_price_include_tax : String
+    payment_method : String
+}
+
+type WishList {
+    id : ID
+    user_id : Int
+    id_hotel : Int
+    address : Address @with(relation: "address")
+}
+
+type DeleteWishListResponse {
+  message: String
+}
+
+type InformationCustomer {
+    username: String
+    sex : Int
+    email : String
+    birthday : String
+    address : String
+    phone_number : String
+    image: String
+}

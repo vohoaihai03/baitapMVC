@@ -1,0 +1,71 @@
+type Mutation {
+
+    register(
+        username: String!,
+        email: String!, 
+        password: String!, 
+        password_confirmation: String!
+    ): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveRegister")
+
+    login(
+        email: String!, 
+        password: String!, 
+        token_device: String!
+    ): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveLogin")
+
+    logout: Boolean @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveLogout")
+
+    refreshToken: AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveRefreshToken")
+
+    loginGoogle(
+        social_token: String!
+    ): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveLoginGoogle")
+
+    loginFacebook(
+        social_token: String!
+    ): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveLoginFacebook")
+
+    requestPasswordReset(
+        email: String!
+    ): AuthCode @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveRequestPasswordReset")
+
+    resetPassword(
+        email: String!, 
+        code: String!
+    ): AuthCode @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveResetPassword")
+
+    updatePassword(
+        email: String!, 
+        code: String!, 
+        password: String!, 
+        password_confirmation: String!
+    ): AuthCode @field(resolver: "App\\GraphQL\\Mutations\\AuthMutator@resolveUpdatePassword")
+
+    createChatRoom(
+        name: String!
+    ): ChatRoom! @create
+
+    createMessage(
+        chat_room_id: Int!, 
+        message: String, 
+        image: Upload
+    ): Message! @field(resolver: "App\\GraphQL\\Resolvers\\MessageResolver@resolveCreateMessage")
+
+    addWishList(
+        id_hotel: Int!
+    ): CustomerWishList @field(resolver: "App\\GraphQL\\Mutations\\CustomerMutator@resolveAddWishList")
+
+
+    deteleWishList(
+        id: Int!
+    ): DeleteWishListResponse @field(resolver: "App\\GraphQL\\Mutations\\CustomerMutator@resolveDeleteWishList")
+
+
+    updateInformation(
+        username: String
+        sex : Int
+        birthday : String
+        phone_number : String
+        image: String
+    ): InformationCustomer @field(resolver: "App\\GraphQL\\Mutations\\CustomerMutator@resolveUpdateInformation")
+}
